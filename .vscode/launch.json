@@ -1,0 +1,30 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "generate",
+      "type": "node",
+      "request": "launch",
+      "args": [
+        "${workspaceRoot}/src/cli.ts",
+        "generate",
+        "iKgnZBkjvdT02HZAyUKVvK",
+        "icons"
+      ],
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register"
+      ],
+      "sourceMaps": true,
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector",
+      "outputCapture": "std",
+      "env": {
+        "TS_NODE_IGNORE": "false",
+        "TS_NODE_FILES": "true",
+        "FT_DEBUG": "YES"
+      }
+    }
+  ]
+}
