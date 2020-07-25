@@ -8,7 +8,7 @@
       "args": [
         "${workspaceRoot}/src/cli.ts",
         "export",
-        "iKgnZBkjvdT02HZAyUKVvK"
+        "iKgnZBkjvdT02HZAyUKVvK/icons"
       ],
       "runtimeArgs": [
         "--nolazy",

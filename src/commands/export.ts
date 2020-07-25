@@ -1,4 +1,5 @@
 import { Command, command, option, Options, param } from 'clime'
+import { Canvas, Component } from 'figma-js'
 import { writeFileSync } from 'fs'
 import { stdout } from 'process'
 import { FigmaDocument } from '..'
@@ -28,10 +29,10 @@ export default class ExportCommand extends Command {
     if (!accessToken) { return 'Missing Figma personal access token. Please provide via --access-token or FIGMA_ACCESS_TOKEN environment variable.' }
     this.log(`loading Figma document '${input.file}'`, verbose)
     const document = await FigmaDocument.load({ fileId: input.file, accessToken })
+    const pages = document.extract<Canvas>([document.root], 'CANVAS').filter((page) => input.page ? page.name === input.page : true)
+    const components = document.extract<Component>(pages, 'COMPONENT')
     this.log('generating Icon Pack', verbose)
-    const pages = document.getPages(input.page)
-    const components = document.extractComponents(pages)
-    const icons = await document.downloadComponents(components)
+    const icons = await document.download(components)
     const iconPack = new FigmaPack(icons)
     await iconPack.optimize()
     const contents = iconPack.exportJson()
