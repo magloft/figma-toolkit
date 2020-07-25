@@ -1,3 +1,4 @@
-export * from './FigmaDocument'
-export * from './IconPack'
-export * from './utils'
+export * from './classes/FigmaDocument'
+export * from './classes/FigmaLoader'
+export * from './classes/FigmaPack'
+

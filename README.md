@@ -1,6 +1,6 @@
 ## @magloft/figma-toolkit
 
-Figma to SVG Icon Pack converter
+Figma export toolkit
 
 ## Install
 
@@ -13,19 +13,20 @@ or
 ## Usage
 
 ```bash
+  Export figma page to svg
+
   USAGE
 
-    figma-toolkit generate [...options] <fileId> <pageName>
+    figma-toolkit export [...options] <input>
 
   PARAMETERS
 
-    fileId   - Figma File ID
-    pageName - Figma Page Name
+    input - figma file page "FILE_ID/PAGE_NAME"
 
   OPTIONS
 
     -v, --verbose                    - verbose [false]
-    -a, --access-token <accessToken> - access token [XXXXX-XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX]
+    -a, --access-token <accessToken> - access token [54712-ff6fcd9a-caac-4a38-afd2-00bf700a0ca2]
     -o, --output <output>            - output file
 ```
 

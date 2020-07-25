@@ -99,6 +99,7 @@
     "@typescript-eslint/no-extra-semi": [
       "error"
     ],
+    "@typescript-eslint/no-inferrable-types": "off",
     "quotes": [
       "error",
       "single"

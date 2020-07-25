@@ -2,14 +2,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "generate",
+      "name": "export",
       "type": "node",
       "request": "launch",
       "args": [
         "${workspaceRoot}/src/cli.ts",
-        "generate",
-        "iKgnZBkjvdT02HZAyUKVvK",
-        "icons"
+        "export",
+        "iKgnZBkjvdT02HZAyUKVvK"
       ],
       "runtimeArgs": [
         "--nolazy",
