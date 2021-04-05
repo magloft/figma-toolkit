@@ -3,21 +3,36 @@
   "configurations": [
     {
       "name": "export",
-      "type": "node",
+      "type": "pwa-node",
       "request": "launch",
-      "args": [
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-node",
+      "runtimeArgs": [
         "${workspaceRoot}/src/cli.ts",
         "export",
         "iKgnZBkjvdT02HZAyUKVvK/icons"
       ],
+      "sourceMaps": true,
+      "cwd": "${workspaceRoot}",
+      "outputCapture": "std",
+      "env": {
+        "TS_NODE_IGNORE": "false",
+        "TS_NODE_FILES": "true",
+        "FT_DEBUG": "YES"
+      }
+    },
+    {
+      "name": "component",
+      "type": "pwa-node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-node",
       "runtimeArgs": [
-        "--nolazy",
-        "-r",
-        "ts-node/register"
+        "${workspaceRoot}/src/cli.ts",
+        "-v",
+        "component",
+        "components.json",
       ],
       "sourceMaps": true,
       "cwd": "${workspaceRoot}",
-      "protocol": "inspector",
       "outputCapture": "std",
       "env": {
         "TS_NODE_IGNORE": "false",
