@@ -1,6 +1,6 @@
 {
   "name": "@magloft/figma-toolkit",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Tobias Strebitzer",
   "description": "Figma to SVG Icon Pack converter",
   "license": "MIT",
