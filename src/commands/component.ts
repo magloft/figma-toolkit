@@ -36,9 +36,8 @@ export interface ParserInstruction {
   args: string[]
 }
 
-const ID_REGEX = /^\$(fill)\(([a-zA-Z0-9\s,]+)\)/
+const ID_REGEX = /^\$(fill|stroke)\(([a-zA-Z0-9\s,]+)\)/
 
-// $fill(topMenuHeadingIconColor, backgroundColor)
 export function parseId(id: string): ParserInstruction | null {
   const match = id.match(ID_REGEX)
   if (!match) { return null }
@@ -71,11 +70,12 @@ export default class ComponentCommand extends Command {
       for (const node of element.querySelectorAll('[id]')) {
         const instruction = parseId(node.getAttribute('id')!)
         if (instruction) {
+          let defaultValue = ''
           if (node.hasAttribute(instruction.target)) {
-            instruction.args.push(node.getAttribute(instruction.target)!)
+            defaultValue = `, '${node.getAttribute(instruction.target)!}'`
             node.removeAttribute(instruction.target)
           }
-          node.setAttribute(`[attr.${instruction.target}]`, `color(${instruction.args.map((arg) => `'${arg}'`).join(', ')})`)
+          node.setAttribute(`[attr.${instruction.target}]`, `color([${instruction.args.map((arg) => `'${arg}'`).join(', ')}]${defaultValue})`)
           node.removeAttribute('id')
         }
       }
