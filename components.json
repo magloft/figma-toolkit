@@ -3,7 +3,7 @@
   "pageName": "Designer",
   "mappings": [
     {
-      "name": "preview-top-menu",
+      "name": "top-menu-preview",
       "output": "src/components/top-menu-preview/top-menu-preview.component.html"
     }
   ]

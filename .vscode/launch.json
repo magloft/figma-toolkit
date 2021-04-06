@@ -27,9 +27,8 @@
       "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-node",
       "runtimeArgs": [
         "${workspaceRoot}/src/cli.ts",
-        "-v",
         "component",
-        "components.json",
+        "components.json"
       ],
       "sourceMaps": true,
       "cwd": "${workspaceRoot}",

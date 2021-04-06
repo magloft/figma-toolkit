@@ -29,14 +29,14 @@ export function loadSvg(svg: string): SVGSVGElement {
   return window.document.documentElement.firstElementChild
 }
 
-export type ParserTarget = 'fill' | 'stroke'
+export type ParserTarget = 'fill' | 'stroke' | 'href'
 
 export interface ParserInstruction {
   target: ParserTarget
   args: string[]
 }
 
-const ID_REGEX = /^\$(fill|stroke)\(([a-zA-Z0-9\s,]+)\)/
+const ID_REGEX = /^\$(fill|stroke|href)\(([a-zA-Z0-9\s,]+)\)/
 
 export function parseId(id: string): ParserInstruction | null {
   const match = id.match(ID_REGEX)
@@ -70,12 +70,22 @@ export default class ComponentCommand extends Command {
       for (const node of element.querySelectorAll('[id]')) {
         const instruction = parseId(node.getAttribute('id')!)
         if (instruction) {
-          let defaultValue = ''
-          if (node.hasAttribute(instruction.target)) {
-            defaultValue = `, '${node.getAttribute(instruction.target)!}'`
-            node.removeAttribute(instruction.target)
+          if (instruction.target === 'href') {
+            const patternId = node.getAttribute('fill')!.match(/url\(#(.+)\)/)![1]
+            const pattern = element.querySelector(`pattern#${patternId}`)!
+            const use = pattern.querySelector('use')!
+            const imageId = use.getAttributeNS('http://www.w3.org/1999/xlink', 'href')!
+            const image = element.querySelector(`image#${imageId}`)!
+            image.removeAttribute('xlink:href')
+            image.setAttribute('[attr.xlink:href]', `image([${instruction.args.map((arg) => `'${arg}'`).join(', ')}])`)
+          } else {
+            let defaultValue = ''
+            if (node.hasAttribute(instruction.target)) {
+              defaultValue = `, '${node.getAttribute(instruction.target)!}'`
+              node.removeAttribute(instruction.target)
+            }
+            node.setAttribute(`[attr.${instruction.target}]`, `color([${instruction.args.map((arg) => `'${arg}'`).join(', ')}]${defaultValue})`)
           }
-          node.setAttribute(`[attr.${instruction.target}]`, `color([${instruction.args.map((arg) => `'${arg}'`).join(', ')}]${defaultValue})`)
           node.removeAttribute('id')
         }
       }
