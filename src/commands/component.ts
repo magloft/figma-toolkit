@@ -5,6 +5,7 @@ import { writeFileSync } from 'fs'
 import { existsSync, mkdirpSync, readFileSync } from 'fs-extra'
 import { dirname, resolve } from 'path'
 import { createSVGWindow } from 'svgdom'
+import * as uuid from 'uuid'
 import { FigmaDocument } from '../classes/FigmaDocument'
 
 export interface ComponentJson {
@@ -71,13 +72,28 @@ export default class ComponentCommand extends Command {
         const instruction = parseId(node.getAttribute('id')!)
         if (instruction) {
           if (instruction.target === 'href') {
-            const patternId = node.getAttribute('fill')!.match(/url\(#(.+)\)/)![1]
-            const pattern = element.querySelector(`pattern#${patternId}`)!
-            const use = pattern.querySelector('use')!
-            const imageId = use.getAttributeNS('http://www.w3.org/1999/xlink', 'href')!
-            const image = element.querySelector(`image#${imageId}`)!
-            image.removeAttribute('xlink:href')
+            const id = `image-${uuid.v4()}`
+            node.setAttribute('fill', `url(#${id})`)
+            // Retrieve or create defs
+            const defs = element.querySelector('defs') ?? (() => {
+              const el = element.ownerDocument.createElement('defs') as unknown as SVGDefsElement
+              element.appendChild(el)
+              return el
+            })()
+            // Create pattern
+            const pattern = element.ownerDocument.createElement('pattern') as unknown as SVGPatternElement
+            pattern.id = id
+            pattern.setAttribute('patternContentUnits', 'objectBoundingBox')
+            pattern.setAttribute('width', '100%')
+            pattern.setAttribute('height', '100%')
+            defs.appendChild(pattern)
+            // Create image
+            const image = element.ownerDocument.createElement('image') as unknown as SVGImageElement
+            image.setAttribute('preserveAspectRatio', 'none')
+            image.setAttribute('width', '1')
+            image.setAttribute('height', '1')
             image.setAttribute('[attr.xlink:href]', `image([${instruction.args.map((arg) => `'${arg}'`).join(', ')}])`)
+            pattern.appendChild(image)
           } else {
             let defaultValue = ''
             if (node.hasAttribute(instruction.target)) {
