@@ -27,5 +27,5 @@
     "javascript",
     "typescript"
   ],
-  "eslint.enable": true
+  "json.format.enable": false
 }

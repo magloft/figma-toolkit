@@ -1,5 +1,7 @@
 import * as cheerio from 'cheerio'
+import { mkdirpSync, writeFileSync } from 'fs-extra'
 import * as htmlMinifier from 'html-minifier'
+import { join, resolve } from 'path'
 import * as SVGO from 'svgo'
 
 export const SVGO_OPTIONS: SVGO.Options = {
@@ -12,6 +14,14 @@ export const SVGO_OPTIONS: SVGO.Options = {
     { removeTitle: true },
     { removeHiddenElems: true }
   ]
+}
+
+export interface SaveIconsOptions {
+  width?: number
+  height?: number
+  viewBox?: string
+  className?: string
+  fill?: string
 }
 
 export class FigmaPack {
@@ -29,6 +39,25 @@ export class FigmaPack {
 
   exportJson() {
     return JSON.stringify(this.exportObject(), null, 2)
+  }
+
+  saveIcons(output: string = '.', { width, height, viewBox, fill, className }: SaveIconsOptions = {}) {
+    const dir = resolve(output ?? '.')
+    mkdirpSync(dir)
+
+    const attributes: string[] = []
+    if (width) { attributes.push(`width="${width}"`) }
+    if (height) { attributes.push(`height="${height}"`) }
+    if (viewBox) { attributes.push(`viewBox="${viewBox}"`) }
+    if (fill) { attributes.push(`fill="${fill}"`) }
+    if (className) { attributes.push(`class="${className}"`) }
+    const attr = attributes.join(' ')
+
+    for (const [name, icon] of Object.entries(this.icons)) {
+      const data = `<svg ${attr} xmlns="http://www.w3.org/2000/svg">${icon}</svg>`
+      const filepath = join(dir, `${name}.svg`)
+      writeFileSync(filepath, data, 'utf8')
+    }
   }
 
   async optimizeSvg(svgString: string, options: Partial<SVGO.Options> = {}) {
