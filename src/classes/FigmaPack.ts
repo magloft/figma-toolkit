@@ -33,6 +33,18 @@ export class FigmaPack {
     }))
   }
 
+  forEach(fn: (key: string, value: string, index: number) => void) {
+    Object.entries(this.icons).forEach(([key, value], index) => {
+      fn(key, value, index)
+    })
+  }
+
+  map<T>(fn: (key: string, value: string, index: number) => T) {
+    return Object.entries(this.icons).map(([key, value], index) => {
+      return fn(key, value, index)
+    })
+  }
+
   exportObject() {
     return this.icons
   }

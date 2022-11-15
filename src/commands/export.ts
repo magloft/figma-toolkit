@@ -3,16 +3,8 @@ import { Canvas, Component } from 'figma-js'
 import { writeFileSync } from 'fs'
 import { stdout } from 'process'
 import { FigmaDocument } from '..'
+import { FigmaInput } from '../classes/FigmaInput'
 import { FigmaPack } from '../classes/FigmaPack'
-
-class FigmaInput {
-  constructor(public file: string, public page?: string) { }
-
-  static cast(path: string): FigmaInput {
-    const [fileId, page] = path.split('/')
-    return new FigmaInput(fileId, page)
-  }
-}
 
 export class ExportOptions extends Options {
   @option({ flag: 'v', description: 'verbose', toggle: true, default: false }) verbose = false

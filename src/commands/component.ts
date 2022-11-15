@@ -24,6 +24,7 @@ export class ComponentOptions extends Options {
 
 export function loadSvg(svg: string): SVGSVGElement {
   const window = createSVGWindow();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (svgjs as any).registerWindow(window, window.document)
   const canvas = svgjs.SVG(window.document.documentElement)
   canvas.svg(svg)

@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [{
     "name": "export",
-    "type": "pwa-node",
+    "type": "node",
     "request": "launch",
     "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-node",
     "runtimeArgs": ["${workspaceRoot}/src/cli.ts", "export", "iKgnZBkjvdT02HZAyUKVvK/icons"],
@@ -11,8 +11,18 @@
     "outputCapture": "std",
     "env": { "TS_NODE_IGNORE": "false", "TS_NODE_FILES": "true", "FT_DEBUG": "YES" }
   }, {
+    "name": "react",
+    "type": "node",
+    "request": "launch",
+    "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-node",
+    "runtimeArgs": ["${workspaceRoot}/src/cli.ts", "react", "iKgnZBkjvdT02HZAyUKVvK/icons", "-o", "putput"],
+    "sourceMaps": true,
+    "cwd": "${workspaceRoot}",
+    "outputCapture": "std",
+    "env": { "TS_NODE_IGNORE": "false", "TS_NODE_FILES": "true", "FT_DEBUG": "YES" }
+  }, {
     "name": "download",
-    "type": "pwa-node",
+    "type": "node",
     "request": "launch",
     "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-node",
     "runtimeArgs": ["${workspaceRoot}/src/cli.ts", "download", "-o", "output", "-w", "24", "-h", "24", "-b", "0 0 24 24", "-f", "currentColor", "iKgnZBkjvdT02HZAyUKVvK/icons"],
@@ -22,7 +32,7 @@
     "env": { "TS_NODE_IGNORE": "false", "TS_NODE_FILES": "true", "FT_DEBUG": "YES" }
   }, {
     "name": "component",
-    "type": "pwa-node",
+    "type": "node",
     "request": "launch",
     "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-node",
     "runtimeArgs": ["${workspaceRoot}/src/cli.ts", "component", "components.json"],
